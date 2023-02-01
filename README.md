@@ -21,15 +21,23 @@ The following steps are included in the analysis:
 12. Find marker genes for each leiden cluster using the Mann-Whitney-U test, and generate the gene rank plot.
 
 A docker image is built and run on a linux/amd64 platform with all the necessary packages like Python-3.9.15, scanpy, and leidenalg.
+
 `docker build --platform linux/amd64 -t reshmaramaiah/10x_analysis:scanpy .`
+
 `docker run --platform linux/amd64 reshmaramaiah/10x_analysis:scanpy`
 
 A WDL workflow was developed using the Docker image to analyze multiple input files at once. It runs the Python script each time for every input file to generate the output files. [WOmtool](https://github.com/broadinstitute/cromwell/releases) was used to check the syntax of your WDL workflow:
+
 `java -jar womtool-84.jar validate 10xchannel.wdl`
+
 The pipeline was run on the WDL workflow engine [Cromwell](https://github.com/broadinstitute/cromwell/releases) along with an input json file:
+
 `java -jar cromwell-84.jar run 10xchannel.wdl -i inputs.json`
+
 inputs.json:
+
 `{"Analysis.inputfiles":["raw_feature_bc_matrix1.h5","raw_feature_bc_matrix2.h5","raw_feature_bc_matrix3.h5","raw_feature_bc_matrix4.h5","raw_feature_bc_matrix5.h5","raw_feature_bc_matrix6.h5","raw_feature_bc_matrix7.h5","raw_feature_bc_matrix8.h5"]}`
+
 Cromwell requires a [Java](https://www.oracle.com/java/technologies/javase/jdk13-archive-downloads.html) environment, of which version 13 was used.
 
 ### Pipeline input ###
